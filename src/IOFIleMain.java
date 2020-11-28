@@ -7,18 +7,36 @@ import java.util.Scanner;
 
 public class IOFIleMain {
     static ArrayList<String> l = new ArrayList<String>();
+    static String info="SistaRaden";
     public static void main(String[] args) {
 
-        writeTOFiler();
-        readFromFIle();
+        readAndFil(); // läser från filen till en arraylist
+        writeTOFiler(info); // skriver INFO till sista raden på filen
+        //readFromFIle(); //läs från filen och sriver ut svaret
 
-        lista();
+        lista(); // lista hela arrayen
         }
 
     private static void lista() {
-        System.out.print(l);
+        l.forEach((n) -> System.out.println(n));
     }
 
+    private static void readAndFil(){
+        try {
+            File myObj = new File("filename.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                l.add(data);
+
+                }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+    }
     private static void readFromFIle() {
 
         try {
@@ -26,8 +44,9 @@ public class IOFIleMain {
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                l.add(data);
-                System.out.print(data);
+               // l.add(data);
+
+                // System.out.print(data);
             }
             myReader.close();
         } catch (FileNotFoundException e) {
@@ -36,12 +55,13 @@ public class IOFIleMain {
         }
     }
 
-    public static void writeTOFiler(){
+    public static void writeTOFiler(String info){
         try {
             FileWriter myWriter =  new FileWriter("fileName.txt", true);
-            System.lineSeparator();
+
             myWriter.write("\n");
-            myWriter.write("Holla");
+            myWriter.write(info);
+            l.add(info);
 
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
